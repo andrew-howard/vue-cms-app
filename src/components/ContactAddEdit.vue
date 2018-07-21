@@ -44,7 +44,7 @@
 import axios from 'axios'
 
 export default {
-    name: 'AddContact',
+    name: 'ContactAddEdit',
     props: {
         contactToUpdate: { type: Object, required: false }
     },
@@ -67,28 +67,30 @@ export default {
     methods: {
         addContact() {
             axios({ method: "POST", "url": "http://localhost:63163/api/contacts", "data": JSON.stringify(this.contact), "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data;
+                    this.response = result.data
+                    this.$router.push({name: 'ContactsList'})
                 }, error => {
                     //console.error(error);
-                    this.error = error;
+                    this.error = error
                 });
         },
         editContact() {
              axios({ method: "PUT", "url": "http://localhost:63163/api/contacts/" + this.contact.id, "data": JSON.stringify(this.contact), "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data;
+                    this.response = result.data
+                    this.$router.push({name: 'ContactsList'})
                 }, error => {
                     //console.error(error);
-                    this.error = error;
+                    this.error = error
                 });
         },
         cancel() {
-            return this.$router.go(-1);
+            return this.$router.go(-1)
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
     .container {
         padding-top: 2rem;
         padding-right: 35%;

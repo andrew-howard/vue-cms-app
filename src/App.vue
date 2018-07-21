@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <the-header></the-header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Contacts from './components/Contacts.vue'
-import AddContact from './components/AddContact.vue'
+import TheHeader from './components/TheHeader.vue'
+import ContactsList from './components/ContactsList.vue'
+import ContactAddEdit from './components/ContactAddEdit.vue'
 
 export default {
   name: 'app',
   components: {
-    Header,
-    Contacts,
-    AddContact
+    TheHeader,
+    ContactsList,
+    ContactAddEdit
   }
 }
 </script>

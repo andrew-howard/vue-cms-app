@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Contacts from '@/components/Contacts'
-import AddContact from '@/components/AddContact'
+import ContactsList from '@/components/ContactsList'
+import ContactAddEdit from '@/components/ContactAddEdit'
 
 Vue.use(Router)
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Contacts',
-      component: Contacts
+      name: 'ContactsList',
+      component: ContactsList
     },
     {
-      path: '/AddContact',
-      name: 'AddContact',
-      component: AddContact,
+      path: '/ContactAddEdit',
+      name: 'ContactAddEdit',
+      component: ContactAddEdit,
       props: true
     }
   ]

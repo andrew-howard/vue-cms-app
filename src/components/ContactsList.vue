@@ -1,9 +1,8 @@
 <template>
     <div id="contact-cards">
-        <div v-bind:key="item.email" v-for="item in contacts" class="card" >
+        <div v-for="item in contacts" class="card" :key="item.id">
             {{item.firstName}} {{item.lastName}}
             <ul>
-                <li>Id: {{item.id}}</li>
                 <li>Title: {{item.title}}</li>
                 <li>Department: {{item.department}}</li>
                 <li>Phone: {{item.phone}}</li>
@@ -12,14 +11,19 @@
             <button type="button" v-on:click="editContact(item)">Edit</button>
             <button type="button" v-on:click="deleteContact(item.id)">Delete</button>
         </div>
+        <contact-delete-modal />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ContactDeleteModal from './ContactDeleteModal.vue'
 
 export default {
-    name: 'Contacts',
+    name: 'ContactsList',
+    components: {
+        ContactDeleteModal
+    },
     data () {
         return {
             contacts: [],
@@ -27,24 +31,28 @@ export default {
         }
     },
     mounted() {
+        //this.getContacts()
         axios.get('http://localhost:63163/api/contacts')
              .then(response => (this.contacts = response.data))
              .catch(error => this.error = error) //console.log(error)
     },
     methods: {
         editContact(contact) {
-            this.$router.push({ name: 'AddContact', params: { contactToUpdate: contact } })
+            this.$router.push({ name: 'ContactAddEdit', params: { contactToUpdate: contact } })
         },
         deleteContact(id) {
-            axios.delete('http://localhost:63163/api/contacts/' + id)
-             .then(response => this.info = response)
-             .catch(error => this.error = error)
+            this.$modal.show('contact-delete-modal', { contactId: id });
         }
+        // getContacts() {
+        //     axios.get('http://localhost:63163/api/contacts')
+        //          .then(response => (this.contacts = response.data))
+        //          .catch(error => this.error = error) //console.log(error)
+        // }
     }
 }
 </script>
 
-<style>
+<style scoped>
 #contact-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 

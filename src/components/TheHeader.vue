@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <router-link to="/">Contacts</router-link>
-        <router-link to="/AddContact">Add Contact</router-link>
+        <router-link to="/ContactAddEdit">Add Contact</router-link>
         <!--<router-link href="/"> Sign In / Register</router-link>-->
         <!--<span>Hello {{name}}!</span>    -->
     </div>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: 'Header',
+    name: 'TheHeader',
     data () {
         return {
             name: 'John Smith'
@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     #header {
         width: 100%;
         font-size: 1rem;
@@ -33,6 +33,7 @@ export default {
         padding: .5rem;
         transition: 0.3s;
         font-size: 1rem;
+        text-decoration: none;
     }
     #header a:hover {
         border-bottom: .1rem solid black;
