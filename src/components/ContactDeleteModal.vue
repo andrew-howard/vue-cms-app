@@ -4,27 +4,36 @@
            :height="100"
            @before-open="beforeOpen"
            >
-           <h2>Delete Contact?</h2>
-           <button v-on:click="deleteContact()">Yes</button>
-           <button v-on:click="dismissModal()">No</button>
+           <div class="model-content-container">
+                <h2>Delete Contact?</h2>
+                <button v-on:click="deleteContact()">Yes</button>
+                <button v-on:click="dismissModal()">No</button>
+           </div>           
     </modal>
 </template>
 
 <script>
-import axios from 'axios'
+import ContactsService from '@/services/ContactsService.js'
 
 export default {
     name: 'ContactDeleteModal',
+    components: {
+        ContactsService
+    },
     data() {
         return {
             id: 0
         }
     },
     methods: {
-         deleteContact() {
-            axios.delete('http://localhost:63163/api/contacts/' + this.id)
-             .then(response => this.info = response)
-             .catch(error => this.error = error)
+        deleteContact() {
+            ContactsService.deleteContact(this.id)
+                           .then(response => {
+                               this.info = response.data
+                               this.$store.commit('deleteContact', this.info)
+                               this.dismissModal()
+                            })
+                           .catch(error => this.error = error)
         },
         dismissModal() {
             this.$modal.hide('contact-delete-modal')
@@ -37,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-    modal {
+    .modal-content-container {
         padding: 1rem;
      }
 </style>

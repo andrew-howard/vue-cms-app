@@ -1,9 +1,8 @@
 <template>
     <div id="header">
-        <router-link to="/">Contacts</router-link>
+        <router-link to="/Contacts">Contacts</router-link>
         <router-link to="/ContactAddEdit">Add Contact</router-link>
-        <!--<router-link href="/"> Sign In / Register</router-link>-->
-        <!--<span>Hello {{name}}!</span>    -->
+        <router-link to="/"> Sign In</router-link>
     </div>
 </template>
 

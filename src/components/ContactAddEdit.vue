@@ -41,10 +41,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import ContactsService from '@/services/ContactsService.js'
 
 export default {
     name: 'ContactAddEdit',
+    components: {
+        ContactsService
+    },
     props: {
         contactToUpdate: { type: Object, required: false }
     },
@@ -66,22 +69,22 @@ export default {
     },
     methods: {
         addContact() {
-            axios({ method: "POST", "url": "http://localhost:63163/api/contacts", "data": JSON.stringify(this.contact), "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data
-                    this.$router.push({name: 'ContactsList'})
-                }, error => {
-                    //console.error(error);
-                    this.error = error
-                });
+            ContactsService.addContact(JSON.stringify(this.contact))
+                           .then(result => {
+                               this.response = result.data
+                               this.$store.commit('addContact', this.response)
+                               this.$router.push({name: 'ContactsList'})
+                            })
+                           .catch(error => this.error = error)
         },
         editContact() {
-             axios({ method: "PUT", "url": "http://localhost:63163/api/contacts/" + this.contact.id, "data": JSON.stringify(this.contact), "headers": { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data
-                    this.$router.push({name: 'ContactsList'})
-                }, error => {
-                    //console.error(error);
-                    this.error = error
-                });
+            ContactsService.editContact(this.contact.id, JSON.stringify(this.contact))
+                           .then(result => {
+                                this.response = result.data
+                                this.$store.commit('editContact', this.response)
+                                this.$router.push({name: 'ContactsList'})  
+                           })
+                           .catch(error => this.error = error)
         },
         cancel() {
             return this.$router.go(-1)

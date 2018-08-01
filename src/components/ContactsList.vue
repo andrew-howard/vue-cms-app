@@ -1,6 +1,6 @@
 <template>
-    <div id="contact-cards">
-        <div v-for="item in contacts" class="card" :key="item.id">
+    <div id="contact-cards" v-if="$store.state.contacts.length > 0">
+        <div v-for="item in $store.state.contacts" class="card" :key="item.id">
             {{item.firstName}} {{item.lastName}}
             <ul>
                 <li>Title: {{item.title}}</li>
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ContactDeleteModal from './ContactDeleteModal.vue'
 
 export default {
@@ -24,17 +23,9 @@ export default {
     components: {
         ContactDeleteModal
     },
-    data () {
-        return {
-            contacts: [],
-            info: null
-        }
-    },
     mounted() {
-        //this.getContacts()
-        axios.get('http://localhost:63163/api/contacts')
-             .then(response => (this.contacts = response.data))
-             .catch(error => this.error = error) //console.log(error)
+        if(!this.$store.state.contacts || this.$store.state.contacts.length === 0)
+            this.$store.dispatch('getContacts')
     },
     methods: {
         editContact(contact) {
@@ -43,11 +34,6 @@ export default {
         deleteContact(id) {
             this.$modal.show('contact-delete-modal', { contactId: id });
         }
-        // getContacts() {
-        //     axios.get('http://localhost:63163/api/contacts')
-        //          .then(response => (this.contacts = response.data))
-        //          .catch(error => this.error = error) //console.log(error)
-        // }
     }
 }
 </script>
