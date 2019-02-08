@@ -11,6 +11,11 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(VModal, { dialog: true, dynamic: true })
 
+// const token = localStorage.getItem('user-token')
+// if(token) {
+//   axios.defaults.headers.common['Authorization'] = token
+// }
+
 new Vue({
   router,
   store,

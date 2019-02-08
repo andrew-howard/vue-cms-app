@@ -1,13 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ContactsService from '@/services/ContactsService.js'
+// import axios from 'axios'
+// import ContactsService from '@/services/ContactsService.js'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     contacts: [],
-    error: ""
+    error: "",
+    token: localStorage.getItem('user-token') || '',
+    status: '',
+    user: {}
+  },
+  getters: {
+    isAuthenticated: state => !!state.token,
+    authStatus: state => state.status
   },
   mutations: {
     addContact(state, contact) {
@@ -21,13 +29,12 @@ export default new Vuex.Store({
     },
     setContacts(state, contacts) {
       state.contacts = contacts
-    }
-  },
-  actions: {
-    getContacts({ commit }) {
-      ContactsService.getContacts()
-                     .then(response => commit('setContacts', response.data))
-                     .catch(error => this.state.error = error)
+    },
+    setUser(state, user) {
+      // console.log("suh")
+      // console.log(user)
+      state.user = { firstName: user.firstName, lastName: user.lastName }
+      console.log(state.user)
     }
   }
 })

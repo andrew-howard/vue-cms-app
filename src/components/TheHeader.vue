@@ -3,15 +3,21 @@
         <router-link to="/Contacts">Contacts</router-link>
         <router-link to="/ContactAddEdit">Add Contact</router-link>
         <router-link to="/"> Sign In</router-link>
+        <div v-if="firstName && lastName">{{firstName}} {{lastName}}</div>
+        <!-- <div>{{store.state.user.firstName}}</div> -->
     </div>
 </template>
 
 <script>
+import store from '../store/store.js'
+
 export default {
     name: 'TheHeader',
     data () {
         return {
-            name: 'John Smith'
+            // name: store.state.user.firstName + " " + store.state.user.lastName
+            firstName: store.state.user.firstName,
+            lastName: store.state.user.lastName
         } 
     }
 }
